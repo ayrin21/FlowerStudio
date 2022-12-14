@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1030409513724",
+    "project_id": "myfirebaseapp-d8f32",
+    "storage_bucket": "myfirebaseapp-d8f32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030409513724:android:06dc7d04b78639fb340579",
+        "android_client_info": {
+          "package_name": "tech.tanztalks.android.myfirebaseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030409513724-ejq3esh4kicls4vj65v7m1mfjafuaa7e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt6Tedk7rI0G2farBIJvcrpDG12VV8uPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030409513724-ejq3esh4kicls4vj65v7m1mfjafuaa7e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
