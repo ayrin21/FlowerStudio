@@ -3,14 +3,17 @@ package tech.tanztalks.android.myfirebaseapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -19,11 +22,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.intellij.lang.annotations.Pattern;
+
+import java.util.Calendar;
+import java.util.regex.Matcher;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,7 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RadioGroup radioGroupRegisterGender;
     private RadioButton radioButtonRegisterGenderSelected;
-
+    private static final String TAG="RegisterActivity";
+    private DatePickerDialog picker;
 
     private String selectedDistrict, selectedState;                 //vars to hold the values of selected State and District
     private TextView tvStateSpinner, tvDistrictSpinner;             //declaring TextView to show the errors
@@ -57,8 +71,27 @@ public class RegisterActivity extends AppCompatActivity {
         radioGroupRegisterGender = findViewById(R.id.radio_group_register_gender);
         radioGroupRegisterGender.clearCheck(); // for clearing all checked radiobutton when activity is started or resumed.
         Button buttonRegister = findViewById(R.id.button_register);
-        stateSpinner = findViewById(R.id.spinner_bangladesh_division);    //Finds a view that was identified by the android:id attribute in xml
+        editTextRegisterDOB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar calendar = Calendar.getInstance();
+                int day= calendar.get(Calendar.DAY_OF_MONTH);
+                int month= calendar.get(Calendar.MONTH);
+                int year= calendar.get(Calendar.YEAR);
+
+                //Date Picker Dialog
+                picker= new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                     editTextRegisterDOB.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
 // spinner
+        stateSpinner = findViewById(R.id.spinner_bangladesh_division);    //Finds a view that was identified by the android:id attribute in xml
+
         //Populate ArrayAdapter using string array and a spinner layout that we will define
         stateAdapter = ArrayAdapter.createFromResource(  getApplicationContext(),
                 R.array.array_bangladesh_division, R.layout.spinner);
@@ -163,6 +196,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String textPwd = editTextRegisterPwd.getText().toString();
                 String textConfirmPwd = editTextConfirmPwd.getText().toString();
                 String textGender;
+
+                String mobileRegex= "[0-1][0-9]{11}";
+                Matcher mobileMatcher;
+                java.util.regex.Pattern mobilePattern = java.util.regex.Pattern.compile(mobileRegex);
+                mobileMatcher = mobilePattern.matcher(textMobile);
 // // TextUtils will always return a boolean value. In code, the former simply calls the equivalent of the other, plus a null check. checks is string length is zero only. isEmpty() return true if, and only if length() is 0
                 if (TextUtils.isEmpty(textFullName)) {
                     Toast.makeText(RegisterActivity.this, "Please enter your full name", Toast.LENGTH_LONG).show();
@@ -191,6 +229,10 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (textMobile.length() != 11) {
                     Toast.makeText(RegisterActivity.this, "Please re-enter your mobile no", Toast.LENGTH_LONG).show();
                     editTextRegisterMobile.setError("Mobile no should be 11 digits.");
+                    editTextRegisterMobile.requestFocus();
+                } else if(!mobileMatcher.find()){
+                    Toast.makeText(RegisterActivity.this,"Please re-enter your mobile no.",Toast.LENGTH_LONG).show();
+                    editTextRegisterMobile.setError("Mobile no is not valid");
                     editTextRegisterMobile.requestFocus();
                 }
                     //spinner code starts from here
@@ -250,7 +292,19 @@ public class RegisterActivity extends AppCompatActivity {
                   finish();*/
 
 
+                } else{
+                    try {
+                        throw task.getException();
+                    } catch(FirebaseAuthUserCollisionException e){
+                       editTextRegisterFulName.setError("User is already registered with this name");
+                       editTextRegisterFulName.requestFocus();
+                    } catch(Exception e){
+
+                        Log.e(TAG, e.getMessage());
+                        Toast.makeText(RegisterActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
                 }
+
             }
         });
     }
