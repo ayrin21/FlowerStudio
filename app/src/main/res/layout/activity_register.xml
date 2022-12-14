@@ -167,11 +167,54 @@
 
             android:textSize="16sp" />
 
+
+
+
+        <TextView
+            android:id="@+id/textView_bangladesh_division"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText_register_mobile"
+            android:layout_marginTop="10dp"
+            android:padding="6dp"
+            android:text="@string/state"
+            android:textColor="#555555"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+
+
+        <Spinner
+            android:id="@+id/spinner_bangladesh_division"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/textView_bangladesh_division"/>
+
+        <TextView
+            android:id="@+id/textView_bangladesh_districts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinner_bangladesh_division"
+            android:layout_marginTop="10dp"
+            android:padding="6dp"
+            android:text="@string/district"
+            android:textColor="#555555"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <Spinner
+            android:id="@+id/spinner_bangladesh_districts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/textView_bangladesh_districts"/>
+
+
         <TextView
             android:id="@+id/textView_register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editText_register_mobile"
+            android:layout_below="@id/spinner_bangladesh_districts"
             android:padding="6dp"
             android:text="Password*" />
 

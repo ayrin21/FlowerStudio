@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +31,12 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RadioGroup radioGroupRegisterGender;
     private RadioButton radioButtonRegisterGenderSelected;
+
+
+    private String selectedDistrict, selectedState;                 //vars to hold the values of selected State and District
+    private TextView tvStateSpinner, tvDistrictSpinner;             //declaring TextView to show the errors
+    private Spinner stateSpinner, districtSpinner;                  //Spinners
+    private ArrayAdapter<CharSequence> stateAdapter, districtAdapter;   //declare adapters for the spinners
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +57,98 @@ public class RegisterActivity extends AppCompatActivity {
         radioGroupRegisterGender = findViewById(R.id.radio_group_register_gender);
         radioGroupRegisterGender.clearCheck(); // for clearing all checked radiobutton when activity is started or resumed.
         Button buttonRegister = findViewById(R.id.button_register);
+        stateSpinner = findViewById(R.id.spinner_bangladesh_division);    //Finds a view that was identified by the android:id attribute in xml
+// spinner
+        //Populate ArrayAdapter using string array and a spinner layout that we will define
+        stateAdapter = ArrayAdapter.createFromResource(  getApplicationContext(),
+                R.array.array_bangladesh_division, R.layout.spinner);
 
+        // Specify the layout to use when the list of choices appear
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        stateSpinner.setAdapter(stateAdapter);
+        //When any item of the stateSpinner is selected
+        stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Define City Spinner but we will populate the options through the selected state
+                districtSpinner = findViewById(R.id.spinner_bangladesh_districts);
+
+                selectedState = stateSpinner.getSelectedItem().toString();      //Obtain the selected State
+
+                int parentID = parent.getId();
+                if (parentID == R.id.spinner_bangladesh_division){
+                    switch (selectedState){
+                        case "Select Your State": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_default_districts, R.layout.spinner);
+                            break;
+                        case "Dhaka": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_dhaka_districts, R.layout.spinner);
+                            break;
+                        case "Chattogram": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_chattogram_districts, R.layout.spinner);
+                            break;
+                        case "Barishal": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_barishal_districts, R.layout.spinner);
+                            break;
+                        case "Mymensingh": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_mymensingh_districts, R.layout.spinner);
+                            break;
+                        case "Rajshahi": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_rajshahi_districts, R.layout.spinner);
+                            break;
+                        case "Rangpur": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_rangpur_districts, R.layout.spinner);
+                            break;
+                        case "Sylhet": districtAdapter = ArrayAdapter.createFromResource(parent.getContext(),
+                                R.array.array_sylhet_districts, R.layout.spinner);
+                            break;
+
+                        default:  break;
+                    }
+                    districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);     // Specify the layout to use when the list of choices appears
+                    districtSpinner.setAdapter(districtAdapter);        //Populate the list of Districts in respect of the State selected
+
+                    //To obtain the selected District from the spinner
+                    districtSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            selectedDistrict = districtSpinner.getSelectedItem().toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        tvStateSpinner = findViewById(R.id.textView_bangladesh_division);
+        tvDistrictSpinner = findViewById(R.id.textView_bangladesh_districts);
+
+        buttonRegister.setOnClickListener(v -> {
+            if (selectedState.equals("Select Your State")) {
+                Toast.makeText(RegisterActivity.this, "Please select your state from the list", Toast.LENGTH_LONG).show();
+                tvStateSpinner.setError("State is required!");      //To set error on TextView
+                tvStateSpinner.requestFocus();
+            } else if (selectedDistrict.equals("Select Your District")) {
+                Toast.makeText(RegisterActivity.this, "Please select your district from the list", Toast.LENGTH_LONG).show();
+                tvDistrictSpinner.setError("District is required!");
+                tvDistrictSpinner.requestFocus();
+                tvStateSpinner.setError(null);                      //To reove error from stateSpinner
+            } else {
+                tvStateSpinner.setError(null);
+                tvDistrictSpinner.setError(null);
+                Toast.makeText(RegisterActivity.this, "Selected State: "+selectedState+"\nSelected District: "+selectedDistrict, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //spinner
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +192,15 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please re-enter your mobile no", Toast.LENGTH_LONG).show();
                     editTextRegisterMobile.setError("Mobile no should be 11 digits.");
                     editTextRegisterMobile.requestFocus();
-                } else if (TextUtils.isEmpty(textPwd)) {
+                }
+                    //spinner code starts from here
+
+
+
+
+
+                   //spinner code ends here
+               else if (TextUtils.isEmpty(textPwd)) {
                     Toast.makeText(RegisterActivity.this, "Please enter your password", Toast.LENGTH_LONG).show();
                     editTextRegisterPwd.setError("Password is required");
                     editTextRegisterPwd.requestFocus();
