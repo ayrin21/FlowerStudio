@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -31,6 +32,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.intellij.lang.annotations.Pattern;
 
@@ -59,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Register");
         Toast.makeText(RegisterActivity.this, "You can register now", Toast.LENGTH_LONG).show();
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBarRegister);
         editTextRegisterFulName = findViewById(R.id.editText_register_full_name);
         editTextRegisterEmail = findViewById(R.id.editText_register_email);
         editTextRegisterDOB = findViewById(R.id.editText_register_dob);
@@ -163,7 +166,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
         tvStateSpinner = findViewById(R.id.textView_bangladesh_division);
         tvDistrictSpinner = findViewById(R.id.textView_bangladesh_districts);
+        //unique user
 
+        //unique user
         buttonRegister.setOnClickListener(v -> {
             if (selectedState.equals("Select Your State")) {
                 Toast.makeText(RegisterActivity.this, "Please select your state from the list", Toast.LENGTH_LONG).show();
@@ -235,13 +240,13 @@ public class RegisterActivity extends AppCompatActivity {
 //                    editTextRegisterMobile.setError("Mobile no is not valid");
 //                    editTextRegisterMobile.requestFocus();
 //                }
-                    //spinner code starts from here
+                    //unique user name code starts from here
 
 
 
 
 
-                   //spinner code ends here
+                   //unique user name code ends here
                else if (TextUtils.isEmpty(textPwd)) {
                     Toast.makeText(RegisterActivity.this, "Please enter your password", Toast.LENGTH_LONG).show();
                     editTextRegisterPwd.setError("Password is required");
@@ -276,20 +281,40 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser(String textFullName, String textEmail, String textDoB, String textGender, String textMobile, String textPwd) {
         //FirenaseAuth()- the entry point the Firebase authentication SDK. First, obtain an instance of this class by calling getInstance(). Then,sign up or sign in or register a user with one of the methods.
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        //Create user profile
         auth.createUserWithEmailAndPassword(textEmail, textPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, "User registered Successfully", Toast.LENGTH_LONG).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
-                    //Send verification email
-                    firebaseUser.sendEmailVerification();
+                    //Enter user data into the Firebase realtime db
+                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textDoB, textGender,textMobile);
+                    //Extracting User reference from db for "Registered Users"
+                    DatabaseReference referenceProfile= FirebaseDatabase.getInstance().getReference("Registered Users"); // If not exists, a parent node named "Registered users will be created
+
+                    referenceProfile.child(firebaseUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                //Send verification email
+                                firebaseUser.sendEmailVerification();
+                                Toast.makeText(RegisterActivity.this, "User registered succesfully. Please varify your email.",Toast.LENGTH_LONG).show();
 
                /*  // open user profile after successful registration
                   Intent intent= new Intent(RegisterActivity.this, UserProfileActivity.class);
                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // for the user not to return back the register activity after successful registration
                   startActivity(intent);
                   finish();*/
+                            } else{
+                                Toast.makeText(RegisterActivity.this, "Registration has failed, please try again",Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                        }
+                    });
+
+
 
 
                 } else{
@@ -303,6 +328,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.e(TAG, e.getMessage());
                         Toast.makeText(RegisterActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
                     }
+                    progressBar.setVisibility(View.GONE);
                 }
 
             }
