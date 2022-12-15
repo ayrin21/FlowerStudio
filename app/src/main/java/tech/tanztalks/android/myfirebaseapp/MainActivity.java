@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
 
         //open login activity
 
-//        Button buttonLogin= findViewById(R.id.button_login);
-//        buttonLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent= new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        Button buttonLogin= findViewById(R.id.button_login);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(MainActivity.this, login.class);
+                startActivity(intent);
+            }
+        });
 
         //open Register activity
 

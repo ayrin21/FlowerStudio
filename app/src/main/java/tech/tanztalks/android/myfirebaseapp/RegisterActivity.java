@@ -197,10 +197,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String textConfirmPwd = editTextConfirmPwd.getText().toString();
                 String textGender;
 
-                String mobileRegex= "[0-1][0-9]{11}";
-                Matcher mobileMatcher;
-                java.util.regex.Pattern mobilePattern = java.util.regex.Pattern.compile(mobileRegex);
-                mobileMatcher = mobilePattern.matcher(textMobile);
+//                String mobileRegex= "/^(?:\\|88)?(01[3-9]\\d{11})$/";
+//                Matcher mobileMatcher;
+//                java.util.regex.Pattern mobilePattern = java.util.regex.Pattern.compile(mobileRegex);
+//                mobileMatcher = mobilePattern.matcher(textMobile);
 // // TextUtils will always return a boolean value. In code, the former simply calls the equivalent of the other, plus a null check. checks is string length is zero only. isEmpty() return true if, and only if length() is 0
                 if (TextUtils.isEmpty(textFullName)) {
                     Toast.makeText(RegisterActivity.this, "Please enter your full name", Toast.LENGTH_LONG).show();
@@ -229,12 +229,12 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (textMobile.length() != 11) {
                     Toast.makeText(RegisterActivity.this, "Please re-enter your mobile no", Toast.LENGTH_LONG).show();
                     editTextRegisterMobile.setError("Mobile no should be 11 digits.");
-                    editTextRegisterMobile.requestFocus();
-                } else if(!mobileMatcher.find()){
-                    Toast.makeText(RegisterActivity.this,"Please re-enter your mobile no.",Toast.LENGTH_LONG).show();
-                    editTextRegisterMobile.setError("Mobile no is not valid");
-                    editTextRegisterMobile.requestFocus();
-                }
+                    editTextRegisterMobile.requestFocus();}
+//                 else if(!mobileMatcher.find()){
+//                    Toast.makeText(RegisterActivity.this,"Please re-enter your mobile no.",Toast.LENGTH_LONG).show();
+//                    editTextRegisterMobile.setError("Mobile no is not valid");
+//                    editTextRegisterMobile.requestFocus();
+//                }
                     //spinner code starts from here
 
 
