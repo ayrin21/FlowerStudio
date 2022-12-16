@@ -301,11 +301,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 firebaseUser.sendEmailVerification();
                                 Toast.makeText(RegisterActivity.this, "User registered succesfully. Please varify your email.",Toast.LENGTH_LONG).show();
 
-               /*  // open user profile after successful registration
-                  Intent intent= new Intent(RegisterActivity.this, UserProfileActivity.class);
+                  // open user profile after successful registration
+                  Intent intent= new Intent(RegisterActivity.this, UserAcitivity.class);
                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // for the user not to return back the register activity after successful registration
                   startActivity(intent);
-                  finish();*/
+                  finish();
                             } else{
                                 Toast.makeText(RegisterActivity.this, "Registration has failed, please try again",Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
