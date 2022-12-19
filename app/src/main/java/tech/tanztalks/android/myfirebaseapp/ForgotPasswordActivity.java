@@ -33,6 +33,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         getSupportActionBar().setTitle("Forget Password");
+
         editTextPwdResetEmail = findViewById(R.id.editText_password_reset_email);
         buttonPwdReset= findViewById(R.id.button_password_reset);
         progressBar=findViewById(R.id.progressBar);
