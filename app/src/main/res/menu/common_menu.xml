@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Refresh"
+        android:icon="@drawable/ic_refresh"
+        android:alphabeticShortcut="r"
+        android:orderInCategory="1"
+        android:id="@+id/menu_refresh"
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="Forget Password"
+        android:id="@+id/menu_change_password"/>
+
+    <item android:title="Classify Flower"
+        android:id="@+id/menu_flower_classification"/>
+
+    <item android:title="Sing Out"
+        android:id="@+id/menu_sign_out"/>
+
+
+
+</menu>

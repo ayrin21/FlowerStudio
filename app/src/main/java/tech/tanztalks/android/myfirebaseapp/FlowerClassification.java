@@ -1,0 +1,16 @@
+package tech.tanztalks.android.myfirebaseapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class FlowerClassification extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_flower_classification);
+
+
+    }
+}
