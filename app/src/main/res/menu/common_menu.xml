@@ -14,8 +14,15 @@
 
     <item android:title="Classify Flower"
         android:id="@+id/menu_flower_classification"/>
+
     <item android:title="Watch Video"
         android:id="@+id/menu_watch_video"/>
+
+    <item android:title="User List"
+        android:id="@+id/menu_user_list"/>
+
+    <item android:title="Map"
+        android:id="@+id/menu_location"/>
 
     <item android:title="Sing Out"
         android:id="@+id/menu_sign_out"/>

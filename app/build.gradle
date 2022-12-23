@@ -47,5 +47,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.karumi:dexter:6.2.2'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+
 
 }

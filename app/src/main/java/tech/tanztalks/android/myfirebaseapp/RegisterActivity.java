@@ -201,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String textPwd = editTextRegisterPwd.getText().toString();
                 String textConfirmPwd = editTextConfirmPwd.getText().toString();
                 String textGender;
+                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 //                String mobileRegex= "/^(?:\\|88)?(01[3-9]\\d{11})$/";
 //                Matcher mobileMatcher;
