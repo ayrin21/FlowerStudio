@@ -21,8 +21,13 @@
     <item android:title="User List"
         android:id="@+id/menu_user_list"/>
 
-    <item android:title="Map"
+    <item android:title="See Map"
         android:id="@+id/menu_location"/>
+
+    <item android:title="See Reviews"
+        android:id="@+id/menu_reviews"/>
+
+
 
     <item android:title="Sing Out"
         android:id="@+id/menu_sign_out"/>

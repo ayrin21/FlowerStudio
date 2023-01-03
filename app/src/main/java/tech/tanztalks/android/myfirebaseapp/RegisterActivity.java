@@ -201,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String textPwd = editTextRegisterPwd.getText().toString();
                 String textConfirmPwd = editTextConfirmPwd.getText().toString();
                 String textGender;
-                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 //                String mobileRegex= "/^(?:\\|88)?(01[3-9]\\d{11})$/";
 //                Matcher mobileMatcher;
@@ -277,11 +277,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
     }
-
+    DatabaseReference databaseUsers;
     // Register user using the credentials given
     private void registerUser(String textFullName, String textEmail, String textDoB, String textGender, String textMobile, String textPwd) {
         //FirenaseAuth()- the entry point the Firebase authentication SDK. First, obtain an instance of this class by calling getInstance(). Then,sign up or sign in or register a user with one of the methods.
         FirebaseAuth auth = FirebaseAuth.getInstance();
+
         //Create user profile
         auth.createUserWithEmailAndPassword(textEmail, textPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
