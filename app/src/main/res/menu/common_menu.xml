@@ -24,9 +24,10 @@
     <item android:title="See Map"
         android:id="@+id/menu_location"/>
 
-    <item android:title="See Reviews"
+    <item android:title="Add Reviews"
         android:id="@+id/menu_reviews"/>
-
+    <item android:title="User Panel"
+        android:id="@+id/menu_user_panel"/>
 
 
     <item android:title="Sing Out"
