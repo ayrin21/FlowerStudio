@@ -1,6 +1,7 @@
 package tech.tanztalks.android.myfirebaseapp;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -33,12 +34,14 @@ public class FlowerClassification extends AppCompatActivity {
     int imageSize = 224;
     private Button button;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flower_classification);
 
         getSupportActionBar().setTitle("Flower Classification");
+
 
 
         result = findViewById(R.id.result);
@@ -71,6 +74,8 @@ public class FlowerClassification extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void classifyImage(Bitmap image){
         try {
@@ -143,5 +148,6 @@ public class FlowerClassification extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
 }

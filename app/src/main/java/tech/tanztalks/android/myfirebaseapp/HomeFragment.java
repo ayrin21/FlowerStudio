@@ -112,6 +112,7 @@ public class HomeFragment extends Fragment {
             //user is signed in stay here
             //set email of logged in user
             //mProfileTv.setText(user.getEmail());
+
         }
         else {
             //user not signed in, go to main acitivity

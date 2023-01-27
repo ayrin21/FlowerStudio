@@ -203,6 +203,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String textGender;
 
 
+
 //                String mobileRegex= "/^(?:\\|88)?(01[3-9]\\d{11})$/";
 //                Matcher mobileMatcher;
 //                java.util.regex.Pattern mobilePattern = java.util.regex.Pattern.compile(mobileRegex);
@@ -291,7 +292,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "User registered Successfully", Toast.LENGTH_LONG).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
                     //Enter user data into the Firebase realtime db
-                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textDoB, textGender,textMobile);
+                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(firebaseUser.getUid(), textFullName, textDoB, textGender,textMobile);
                     //Extracting User reference from db for "Registered Users"
                     DatabaseReference referenceProfile= FirebaseDatabase.getInstance().getReference("Registered Users"); // If not exists, a parent node named "Registered users will be created
 
