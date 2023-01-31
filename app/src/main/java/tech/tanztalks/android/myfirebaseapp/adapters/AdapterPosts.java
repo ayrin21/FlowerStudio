@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +73,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String uName = postList.get(i).getuName();
         String uDp = postList.get(i).getuDp();
         final String pId = postList.get(i).getpId();
+        Log.e("AdapterValue", pId);
         String pTitle = postList.get(i).getpTitle();
         String pDescription = postList.get(i).getpDescr();
         String pImage = postList.get(i).getpImage();

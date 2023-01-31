@@ -27,6 +27,9 @@
         android:id="@+id/menu_reviews"/>
     <item android:title="User Panel"
         android:id="@+id/menu_user_panel"/>
+    <item android:title="User List"
+        android:id="@+id/menu_user_list"/>
+
     <item android:title="Flower Library"
         android:id="@+id/menu_flower_library"/>
 
