@@ -14,19 +14,31 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     Context context;
+    ArrayList<User> list; // userList
 
+    //s
+    public  void addAll(ArrayList<User> newUsers){
+       int initSize = list.size();
+       list.addAll(newUsers);
+       notifyItemChanged(initSize, newUsers.size());
+    }
 
-    ArrayList<User> list;
-
+    public String getLastItemId (){
+        return list.get(list.size()-1).getUid();
+    }
+    //e
     public MyAdapter(Context context, ArrayList<User> list) {
         this.context = context;
         this.list = list;
+        //s
+
+        //e
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.userentry,parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.userentry,parent, false);// v = itemView
 
         return new MyViewHolder(v);
     }

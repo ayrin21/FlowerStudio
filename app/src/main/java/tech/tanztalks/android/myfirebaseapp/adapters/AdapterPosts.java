@@ -46,7 +46,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
      private DatabaseReference likesRef; // for likes db node
      private DatabaseReference postsRef; //
 
-    boolean mProcessLike = false;
+     boolean mProcessLike = false;
 
     public AdapterPosts(Context context, List<ModelPost> postList) {
         this.context = context;
@@ -127,7 +127,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
                 mProcessLike = true;
                 // get id of the post clicked
-
+                //myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final String postIde = postList.get(i).getpId();
                 likesRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -141,7 +141,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                             }
                         }
                         else{
-                            // not likes, like it
+                            // not liked, like it
                             postsRef.child(postIde).child("pLikes").setValue(""+(pLikes+1));
                             likesRef.child(postIde).child(myUid).setValue("Liked");
                             mProcessLike = false;

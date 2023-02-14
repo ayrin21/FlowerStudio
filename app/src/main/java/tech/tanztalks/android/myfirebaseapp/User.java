@@ -1,6 +1,7 @@
 package tech.tanztalks.android.myfirebaseapp;
 
 public class User {
+    private String uid;
     private String fullname;
     private  String gender;
     private String mobile;
@@ -10,12 +11,21 @@ public class User {
 
     }
 
-    public User(String fullname, String gender, String mobile, String email) {
 
+    public User(String uid, String fullname, String gender, String mobile, String email) {
+        this.uid = uid;
         this.fullname = fullname;
         this.gender = gender;
         this.mobile = mobile;
         this.email = email;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getFullname() {

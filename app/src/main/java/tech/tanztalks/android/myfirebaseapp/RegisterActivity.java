@@ -32,8 +32,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.intellij.lang.annotations.Pattern;
 
@@ -283,59 +287,78 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser(String textFullName, String textEmail, String textDoB, String textGender, String textMobile, String textPwd) {
         //FirenaseAuth()- the entry point the Firebase authentication SDK. First, obtain an instance of this class by calling getInstance(). Then,sign up or sign in or register a user with one of the methods.
         FirebaseAuth auth = FirebaseAuth.getInstance();
+         //
+         Query usernameQuery = FirebaseDatabase.getInstance().getReference().child("Registered Users").orderByChild("fullname").equalTo(textFullName);
+         usernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 if(dataSnapshot.getChildrenCount()>0){
+                     Toast.makeText(RegisterActivity.this, "Choose different name!", Toast.LENGTH_LONG).show();
+                 } else {
 
+                     auth.createUserWithEmailAndPassword(textEmail, textPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                         @Override
+                         public void onComplete(@NonNull Task<AuthResult> task) {
+                             if (task.isSuccessful()) {
+                                 Toast.makeText(RegisterActivity.this, "User registered Successfully", Toast.LENGTH_LONG).show();
+                                 FirebaseUser firebaseUser = auth.getCurrentUser();
+                                 //Enter user data into the Firebase realtime db
+                                 ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(firebaseUser.getUid(), textFullName, textDoB, textGender,textMobile, firebaseUser.getEmail());
+                                 //Extracting User reference from db for "Registered Users"
+                                 DatabaseReference referenceProfile= FirebaseDatabase.getInstance().getReference("Registered Users"); // If not exists, a parent node named "Registered users will be created
+
+                                 referenceProfile.child(firebaseUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                     @Override
+                                     public void onComplete(@NonNull Task<Void> task) {
+                                         if(task.isSuccessful()){
+                                             //Send verification email
+                                             firebaseUser.sendEmailVerification();
+                                             Toast.makeText(RegisterActivity.this, "User registered succesfully. Please varify your email.",Toast.LENGTH_LONG).show();
+
+                                             // open user profile after successful registration
+                                             Intent intent= new Intent(RegisterActivity.this, UserAcitivity.class);
+                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // for the user not to return back the register activity after successful registration
+                                             startActivity(intent);
+                                             finish();
+                                         } else{
+                                             Toast.makeText(RegisterActivity.this, "Registration has failed, please try again",Toast.LENGTH_LONG).show();
+                                             progressBar.setVisibility(View.GONE);
+                                         }
+
+                                     }
+                                 });
+
+
+
+
+                             } else{
+                                 try {
+                                     throw task.getException();
+                                 } catch(FirebaseAuthUserCollisionException e){
+                                     editTextRegisterFulName.setError("User is already registered with this name");
+                                     editTextRegisterFulName.requestFocus();
+                                 } catch(Exception e){
+
+                                     Log.e(TAG, e.getMessage());
+                                     Toast.makeText(RegisterActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                                 }
+                                 progressBar.setVisibility(View.GONE);
+                             }
+
+                         }
+                     });
+
+                 }
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+         });
+        //
         //Create user profile
-        auth.createUserWithEmailAndPassword(textEmail, textPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "User registered Successfully", Toast.LENGTH_LONG).show();
-                    FirebaseUser firebaseUser = auth.getCurrentUser();
-                    //Enter user data into the Firebase realtime db
-                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(firebaseUser.getUid(), textFullName, textDoB, textGender,textMobile, firebaseUser.getEmail());
-                    //Extracting User reference from db for "Registered Users"
-                    DatabaseReference referenceProfile= FirebaseDatabase.getInstance().getReference("Registered Users"); // If not exists, a parent node named "Registered users will be created
 
-                    referenceProfile.child(firebaseUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                //Send verification email
-                                firebaseUser.sendEmailVerification();
-                                Toast.makeText(RegisterActivity.this, "User registered succesfully. Please varify your email.",Toast.LENGTH_LONG).show();
-
-                  // open user profile after successful registration
-                  Intent intent= new Intent(RegisterActivity.this, UserAcitivity.class);
-                  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // for the user not to return back the register activity after successful registration
-                  startActivity(intent);
-                  finish();
-                            } else{
-                                Toast.makeText(RegisterActivity.this, "Registration has failed, please try again",Toast.LENGTH_LONG).show();
-                                progressBar.setVisibility(View.GONE);
-                            }
-
-                        }
-                    });
-
-
-
-
-                } else{
-                    try {
-                        throw task.getException();
-                    } catch(FirebaseAuthUserCollisionException e){
-                       editTextRegisterFulName.setError("User is already registered with this name");
-                       editTextRegisterFulName.requestFocus();
-                    } catch(Exception e){
-
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(RegisterActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-                    progressBar.setVisibility(View.GONE);
-                }
-
-            }
-        });
     }
     //
 
