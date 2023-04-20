@@ -1,5 +1,6 @@
 package tech.tanztalks.android.myfirebaseapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +13,15 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -33,6 +39,7 @@ public class FlowerClassification extends AppCompatActivity {
     Button picture;
     int imageSize = 224;
     private Button button;
+    private FirebaseAuth authProfile;
 
 
     @Override
@@ -147,6 +154,66 @@ public class FlowerClassification extends AppCompatActivity {
             classifyImage(image);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //Inflate menu items
+        getMenuInflater().inflate(R.menu.common_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // When any menu item is selected
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.menu_refresh){
+            //Refresh Activity
+            startActivity((getIntent()));
+            finish();
+
+//        } else if(id == R.id.menu_change_password){
+//            Intent intent = new Intent(UserAcitivity.this, ChangePasswordActivity.class);
+//            startActivity(intent);
+
+        }
+        else if(id == R.id.menu_watch_video){
+            Intent intent = new Intent(FlowerClassification.this, VideoActivity.class);
+            startActivity(intent);
+        }
+
+        else if(id == R.id.menu_location){
+            Intent intent = new Intent(FlowerClassification.this, LocationActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_reviews){
+            Intent intent = new Intent(FlowerClassification.this, AddReviewActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_panel){
+            Intent intent = new Intent(FlowerClassification.this, ShowPostActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_list){
+            Intent intent = new Intent(FlowerClassification.this, UserListActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_library){
+            Intent intent = new Intent(FlowerClassification.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_sign_out){
+            authProfile.signOut();
+            Toast.makeText(FlowerClassification.this, "Signed Out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(FlowerClassification.this, MainActivity.class);
+
+            // Clear stack to prevent user coming back to UserActivity on pressing back button signing out
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Closer UserActivity after signing out
+        } else{
+            Toast.makeText(FlowerClassification.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

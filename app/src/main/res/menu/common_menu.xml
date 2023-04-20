@@ -32,6 +32,8 @@
 
     <item android:title="Flower Library"
         android:id="@+id/menu_flower_library"/>
+    <item android:title="Photo Gallery"
+        android:id="@+id/menu_photo_gallery"/>
 
 
     <item android:title="Sing Out"

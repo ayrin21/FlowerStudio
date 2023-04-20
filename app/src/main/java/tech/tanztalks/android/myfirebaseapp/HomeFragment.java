@@ -129,10 +129,10 @@ public class HomeFragment extends Fragment {
 
     //start
     /*inflate options menu*/
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //inflating menu
-        inflater.inflate(R.menu.common_menu, menu);
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        //inflating menu
+//        inflater.inflate(R.menu.common_menu, menu);
 
         //hide some options
 //        menu.findItem(R.id.action_create_group).setVisible(false);
@@ -170,8 +170,8 @@ public class HomeFragment extends Fragment {
 ////            }
 //        });
 
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+ //       super.onCreateOptionsMenu(menu, inflater);
+ //   }
 
     /*handle menu item clicks*/
     @Override

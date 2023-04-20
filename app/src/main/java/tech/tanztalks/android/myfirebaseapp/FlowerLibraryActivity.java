@@ -11,10 +11,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +45,7 @@ public class FlowerLibraryActivity extends AppCompatActivity {
     private List<FlowerResponseModel> responseModels;
     private FlowerAdapter flowerAdapter;
     ActionBar actionBar;
+    private FirebaseAuth authProfile;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -90,5 +96,69 @@ public class FlowerLibraryActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         onBackPressed();//goto previous activity
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //Inflate menu items
+        getMenuInflater().inflate(R.menu.common_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // When any menu item is selected
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.menu_refresh){
+            //Refresh Activity
+            startActivity((getIntent()));
+            finish();
+
+//        } else if(id == R.id.menu_change_password){
+//            Intent intent = new Intent(UserAcitivity.this, ChangePasswordActivity.class);
+//            startActivity(intent);
+
+        } else if(id == R.id.menu_flower_classification){
+            Intent intent = new Intent(FlowerLibraryActivity.this, FlowerClassification.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_watch_video){
+            Intent intent = new Intent(FlowerLibraryActivity.this, VideoActivity.class);
+            startActivity(intent);
+        }
+
+        else if(id == R.id.menu_location){
+            Intent intent = new Intent(FlowerLibraryActivity.this, LocationActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_reviews){
+            Intent intent = new Intent(FlowerLibraryActivity.this, AddReviewActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_panel){
+            Intent intent = new Intent(FlowerLibraryActivity.this, ShowPostActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_list){
+            Intent intent = new Intent(FlowerLibraryActivity.this, UserListActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_library){
+            Intent intent = new Intent(FlowerLibraryActivity.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_sign_out){
+            authProfile.signOut();
+            Toast.makeText(FlowerLibraryActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(FlowerLibraryActivity.this, MainActivity.class);
+
+            // Clear stack to prevent user coming back to UserActivity on pressing back button signing out
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Closer UserActivity after signing out
+        } else{
+            Toast.makeText(FlowerLibraryActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
