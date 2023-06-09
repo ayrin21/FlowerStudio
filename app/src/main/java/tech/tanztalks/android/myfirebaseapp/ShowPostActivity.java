@@ -2,6 +2,7 @@ package tech.tanztalks.android.myfirebaseapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,17 +17,25 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ShowPostActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
+    ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_post);
 
-        getSupportActionBar().setTitle("Post");
+        //getSupportActionBar().setTitle("Post");
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Post");
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 
 
-
+    public boolean onSupportNavigateUp(){
+        onBackPressed();//goto previous activity
+        return super.onSupportNavigateUp();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         //Inflate menu items
@@ -70,6 +79,10 @@ public class ShowPostActivity extends AppCompatActivity {
         }
         else if(id == R.id.menu_flower_library){
             Intent intent = new Intent(ShowPostActivity.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_dictionary){
+            Intent intent = new Intent(ShowPostActivity.this, FlowerDicActivity.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

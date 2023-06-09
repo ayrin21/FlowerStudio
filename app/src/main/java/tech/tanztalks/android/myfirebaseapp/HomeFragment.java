@@ -88,6 +88,9 @@ public class HomeFragment extends Fragment {
               postList.clear();
               for(DataSnapshot ds: dataSnapshot.getChildren()){
                   ModelPost modelPost = ds.getValue(ModelPost.class);
+                  //like
+
+                  // like
                   postList.add(modelPost);
 
                   //adapter

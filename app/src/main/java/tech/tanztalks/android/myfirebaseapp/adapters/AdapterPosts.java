@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -67,7 +68,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, @SuppressLint("RecyclerView") int i) {
-//
+//      //
+        //ModelPost model = postList.get(i);
+
+        //
         String uid = postList.get(i).getUid();
         String uEmail = postList.get(i).getuEmail();
         String uName = postList.get(i).getuName();
@@ -76,6 +80,9 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         Log.e("AdapterValue", pId);
         String pTitle = postList.get(i).getpTitle();
         String pDescription = postList.get(i).getpDescr();
+        //rating
+        String prating = postList.get(i).getpRating();
+                //  rating
         String pImage = postList.get(i).getpImage();
         String pTimeStamp = postList.get(i).getpTime();
         String pLikes = postList.get(i).getpLikes();// contain total number of likes for a post
@@ -91,6 +98,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.pTimeTv.setText(pTime);
         myHolder.pTitleTv.setText(pTitle);
         myHolder.pDescriptionTv.setText(pDescription);
+        myHolder.prating.setText(prating);
         myHolder.pLikesTv.setText(pLikes+" Likes"); //
         myHolder.pCommentsTv.setText(pComments + " Comments");
 
@@ -121,22 +129,45 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 Toast.makeText(context, "More", Toast.LENGTH_SHORT).show();
             }
         });
+
+//        // like new try
+//        myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final String postIde = postList.get(i).getpId();
+//
+//                postsRef.child(postIde).child("likes").child(myUid).setValue(true).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        postsRef.child(postIde).child("pLikes").setValue(""+(pLikes+1) + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                myHolder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked,0,0,0);
+//                            }
+//                        });
+//                    }
+//                });
+//
+//            }
+//        });
+
+//
         myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
                 mProcessLike = true;
                 // get id of the post clicked
-                //myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+                myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final String postIde = postList.get(i).getpId();
                 likesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (mProcessLike){
-                            if(dataSnapshot.child(postIde).hasChild(myUid)){
+                            if(dataSnapshot.child(pId).hasChild(myUid)){
                                 // already likes, so remove like
-                                postsRef.child(postIde).child("pLikes").setValue(""+(pLikes-1));
-                                likesRef.child(postIde).child(myUid).removeValue();
+                                postsRef.child(pId).child("pLikes").setValue(""+(pLikes-1));
+                                likesRef.child(pId).child(myUid).removeValue();
                                 mProcessLike = false;
                             }
                         }
@@ -201,6 +232,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
             }
         });
+
     }
 
     @Override
@@ -213,7 +245,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         //
         ImageView uPictureIv, pImageIv;
-        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv, pCommentsTv;
+        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, prating, pLikesTv, pCommentsTv;
         ImageButton moreBtn;
         Button likeBtn, commentBtn, shareBtn;
 
@@ -227,6 +259,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             uNameTv=itemView.findViewById(R.id.uNameTv);
             pTitleTv=itemView.findViewById(R.id.pTitleTv);
             pDescriptionTv=itemView.findViewById(R.id.pDescriptionTv);
+            prating=itemView.findViewById(R.id.prating);
             pLikesTv=itemView.findViewById(R.id.pLikesTv);
             pCommentsTv=itemView.findViewById(R.id.pCommentsTv);
             moreBtn=itemView.findViewById(R.id.moreBtn);

@@ -40,6 +40,7 @@ public class FlowerClassification extends AppCompatActivity {
     int imageSize = 224;
     private Button button;
     private FirebaseAuth authProfile;
+    ActionBar actionBar;
 
 
     @Override
@@ -47,7 +48,11 @@ public class FlowerClassification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flower_classification);
 
-        getSupportActionBar().setTitle("Flower Classification");
+        //getSupportActionBar().setTitle("Flower Classification");
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Flower Library");
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -155,6 +160,10 @@ public class FlowerClassification extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+    public boolean onSupportNavigateUp(){
+        onBackPressed();//goto previous activity
+        return super.onSupportNavigateUp();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         //Inflate menu items
@@ -198,6 +207,10 @@ public class FlowerClassification extends AppCompatActivity {
         }
         else if(id == R.id.menu_flower_library){
             Intent intent = new Intent(FlowerClassification.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_dictionary){
+            Intent intent = new Intent(FlowerClassification.this, FlowerDicActivity.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

@@ -163,12 +163,10 @@
             android:layout_below="@id/textView_register_mobile"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-
             android:background="@drawable/border"
             android:hint="enter your mobile no. "
             android:inputType="phone"
             android:padding="6dp"
-
             android:textSize="16sp" />
 
 
@@ -181,7 +179,7 @@
             android:layout_below="@id/editText_register_mobile"
             android:layout_marginTop="10dp"
             android:padding="6dp"
-            android:text="@string/state"
+            android:text="Division*"
             android:textColor="#555555"
             android:focusable="true"
             android:focusableInTouchMode="true"/>
@@ -192,6 +190,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/border"
+            android:padding="6dp"
+            android:textSize="16sp"
             android:layout_below="@id/textView_bangladesh_division"/>
 
         <TextView
@@ -211,6 +213,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:padding="6dp"
+            android:textSize="16sp"
             android:layout_below="@id/textView_bangladesh_districts"/>
 
 

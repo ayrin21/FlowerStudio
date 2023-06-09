@@ -146,6 +146,10 @@ public class FlowerLibraryActivity extends AppCompatActivity {
             Intent intent = new Intent(FlowerLibraryActivity.this, FlowerLibraryActivity.class);
             startActivity(intent);
         }
+        else if(id == R.id.menu_flower_dictionary){
+            Intent intent = new Intent(FlowerLibraryActivity.this, FlowerDicActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(FlowerLibraryActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

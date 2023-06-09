@@ -43,6 +43,24 @@
             android:padding="10dp"
             android:singleLine="true" />
 <!--            android:background="@drawable/edit"-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rate Flower Studio!"
+            android:textAppearance="?android:textAppearanceLarge"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:id="@+id/rateCount"/>
+<!--        <EditText-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/review"/>-->
 
 
         <Button

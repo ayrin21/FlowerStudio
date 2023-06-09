@@ -208,10 +208,10 @@ public class UserAcitivity extends AppCompatActivity {
             Intent intent = new Intent(UserAcitivity.this, FlowerLibraryActivity.class);
             startActivity(intent);
         }
-//        else if(id == R.id.menu_photo_gallery){
-//            Intent intent = new Intent(UserAcitivity.this, GalleryActivity.class);
-//            startActivity(intent);
-//        }
+        else if(id == R.id.menu_flower_dictionary){
+            Intent intent = new Intent(UserAcitivity.this, FlowerDicActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(UserAcitivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

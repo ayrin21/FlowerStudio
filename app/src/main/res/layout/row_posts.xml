@@ -77,6 +77,14 @@
             android:textStyle="bold"
             android:text="Description"
             android:autoLink="all"/>
+        <TextView
+            android:id="@+id/prating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Rating"
+            android:autoLink="all"/>
         <!--<ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"></ImageView> -->

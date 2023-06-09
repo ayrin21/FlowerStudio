@@ -1,6 +1,7 @@
 package tech.tanztalks.android.myfirebaseapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,13 +19,18 @@ public class VideoActivity extends AppCompatActivity {
 
     private YouTubePlayerView youTubePlayerView;
     private FirebaseAuth authProfile;
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-        getSupportActionBar().setTitle("Youtube Video");
+        //getSupportActionBar().setTitle("Youtube Video");
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Watch Video");
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         youTubePlayerView = findViewById(R.id.activity_main_youtubePlayerView);
         getLifecycle().addObserver(youTubePlayerView);
@@ -89,6 +95,10 @@ public class VideoActivity extends AppCompatActivity {
         }
         else if(id == R.id.menu_flower_library){
             Intent intent = new Intent(VideoActivity.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_library){
+            Intent intent = new Intent(VideoActivity.this, FlowerDicActivity.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

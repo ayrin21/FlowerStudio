@@ -168,6 +168,9 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
     }
+    // add kore dekhi
+
+    //
 
     private void setLikes() {
         //
@@ -217,6 +220,8 @@ public class PostDetailActivity extends AppCompatActivity {
                         postsRef.child(postId).child("pLikes").setValue(""+(Integer.parseInt(pLikes)-1));
                         likesRef.child(postId).child(myUid).removeValue();
                         mProcessLike = false;
+                        likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked,0,0,0);
+                        likeBtn.setText("Liked");
 
                     }
                 }
@@ -225,6 +230,8 @@ public class PostDetailActivity extends AppCompatActivity {
                     postsRef.child(postId).child("pLikes").setValue(""+(Integer.parseInt(pLikes)+1));
                     likesRef.child(postId).child(myUid).setValue("Liked");
                     mProcessLike = false;
+                    likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like_black,0,0,0);
+                    likeBtn.setText("Like");
 
 
 

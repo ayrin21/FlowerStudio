@@ -2,6 +2,7 @@ package tech.tanztalks.android.myfirebaseapp;
 //implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,6 +45,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     FloatingActionButton fab;
     private FusedLocationProviderClient mLocationClient;
     private int GPS_REQUEST_CODE = 9001;
+    ActionBar actionBar;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,7 +53,11 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        getSupportActionBar().setTitle("Location");
+        //getSupportActionBar().setTitle("Location");
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Map");
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         fab = findViewById(R.id.fab);
 
@@ -180,65 +186,72 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         }
     }
+    public boolean onSupportNavigateUp(){
+        onBackPressed();//goto previous activity
+        return super.onSupportNavigateUp();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //Inflate menu items
+        getMenuInflater().inflate(R.menu.common_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // When any menu item is selected
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.menu_refresh){
+            //Refresh Activity
+            startActivity((getIntent()));
+            finish();
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        //Inflate menu items
-//        getMenuInflater().inflate(R.menu.common_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//    // When any menu item is selected
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-//        int id = item.getItemId();
-//        if(id == R.id.menu_refresh){
-//            //Refresh Activity
-//            startActivity((getIntent()));
-//            finish();
-//
-////        } else if(id == R.id.menu_change_password){
-////            Intent intent = new Intent(UserAcitivity.this, ChangePasswordActivity.class);
-////            startActivity(intent);
-//
-//        }
-//        else if(id == R.id.menu_watch_video){
-//            Intent intent = new Intent(LocationActivity.this, VideoActivity.class);
+//        } else if(id == R.id.menu_change_password){
+//            Intent intent = new Intent(UserAcitivity.this, ChangePasswordActivity.class);
 //            startActivity(intent);
-//        }
-//
-//        else if(id == R.id.menu_location){
-//            Intent intent = new Intent(LocationActivity.this, LocationActivity.class);
-//            startActivity(intent);
-//        }
-//        else if(id == R.id.menu_reviews){
-//            Intent intent = new Intent(LocationActivity.this, AddReviewActivity.class);
-//            startActivity(intent);
-//        }
-//        else if(id == R.id.menu_user_panel){
-//            Intent intent = new Intent(LocationActivity.this, ShowPostActivity.class);
-//            startActivity(intent);
-//        }
-//        else if(id == R.id.menu_user_list){
-//            Intent intent = new Intent(LocationActivity.this, UserListActivity.class);
-//            startActivity(intent);
-//        }
-//        else if(id == R.id.menu_flower_library){
-//            Intent intent = new Intent(LocationActivity.this, FlowerLibraryActivity.class);
-//            startActivity(intent);
-//        }
-//        else if(id == R.id.menu_sign_out){
-//            authProfile.signOut();
-//            Toast.makeText(LocationActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(LocationActivity.this, MainActivity.class);
-//
-//            // Clear stack to prevent user coming back to UserActivity on pressing back button signing out
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
-//            finish(); // Closer UserActivity after signing out
-//        } else{
-//            Toast.makeText(LocationActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
+        }
+        else if(id == R.id.menu_watch_video){
+            Intent intent = new Intent(LocationActivity.this, VideoActivity.class);
+            startActivity(intent);
+        }
+
+        else if(id == R.id.menu_location){
+            Intent intent = new Intent(LocationActivity.this, LocationActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_reviews){
+            Intent intent = new Intent(LocationActivity.this, AddReviewActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_panel){
+            Intent intent = new Intent(LocationActivity.this, ShowPostActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_list){
+            Intent intent = new Intent(LocationActivity.this, UserListActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_library){
+            Intent intent = new Intent(LocationActivity.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_library){
+            Intent intent = new Intent(LocationActivity.this, FlowerDicActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_sign_out){
+            authProfile.signOut();
+            Toast.makeText(LocationActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+
+            // Clear stack to prevent user coming back to UserActivity on pressing back button signing out
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Closer UserActivity after signing out
+        } else{
+            Toast.makeText(LocationActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

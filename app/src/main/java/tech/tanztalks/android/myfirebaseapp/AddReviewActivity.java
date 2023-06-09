@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,7 +51,7 @@ import java.util.HashMap;
 public class AddReviewActivity extends AppCompatActivity {
 
    FirebaseAuth firebaseAuth;
-    private FirebaseAuth authProfile;
+   private FirebaseAuth authProfile;
    DatabaseReference userDbRef;
    ActionBar actionBar;
    //permission constants
@@ -64,6 +66,12 @@ public class AddReviewActivity extends AppCompatActivity {
     String[] storagePermissions;
    //
    EditText titlep, descriptionp;
+   //rating
+   TextView rateCount, showRating;
+   EditText review;
+   RatingBar ratingBar;
+   float rateValue ; String temp;
+   //rating
    ImageView imageIv;
    Button buttonp;
    //user info
@@ -91,6 +99,7 @@ public class AddReviewActivity extends AppCompatActivity {
         storagePermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
        pd = new ProgressDialog(this);
+
 
       firebaseAuth=FirebaseAuth.getInstance();
       checkUserStatus();
@@ -122,6 +131,10 @@ public class AddReviewActivity extends AppCompatActivity {
         descriptionp=findViewById(R.id.pdes);
         imageIv=findViewById(R.id.pImageIv);
         buttonp=findViewById(R.id.pupload);
+        rateCount=findViewById(R.id.rateCount);
+        ratingBar=findViewById(R.id.ratingBar);
+        //review=findViewById(R.id.review);
+
 
 
         //get image from camera/gallery on click
@@ -133,7 +146,25 @@ public class AddReviewActivity extends AppCompatActivity {
                 showImagePickDialogue();
             }
         });
+// rating
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                rateValue=ratingBar.getRating();
+                if(rateValue<=1 && rateValue >0)
+                    rateCount.setText("Bad " + rateValue +"/5");
+                else if (rateValue<=2 && rateValue >1)
+                    rateCount.setText("Ok "+rateValue +"/5");
+                else if(rateValue<=3 && rateValue >2)
+                    rateCount.setText("Good " +rateValue +"/5");
+                else if (rateValue<=4 && rateValue >3)
+                    rateCount.setText("Very Good " + rateValue + "/5");
+                else if (rateValue<=5 && rateValue >4)
+                    rateCount.setText("Best " +rateValue +"/5");
 
+            }
+        });
+//rating
         //upload button click listener
 
         buttonp.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +173,12 @@ public class AddReviewActivity extends AppCompatActivity {
                 // get data (title, description) from edittext
                 String title = titlep.getText().toString().trim();
                 String description = descriptionp.getText().toString().trim();
+                temp = rateCount.getText().toString();
+                //showRating.setText("Your Rating: \n" +temp +"\n" + review.getText());
+//                review.setText("");
+//                ratingBar.setRating(0);
+//                rateCount.setText("");
+
                 if (TextUtils.isEmpty(title)){
                     Toast.makeText(AddReviewActivity.this,"Enter title!",Toast.LENGTH_LONG).show();
                     return;
@@ -153,10 +190,10 @@ public class AddReviewActivity extends AppCompatActivity {
                 if (image_rui==null){
 
                     // post without image
-                    uploadData(title, description, "noImage");
+                    uploadData(title, description, "noImage", temp);
                 }
                 else{
-                    uploadData(title, description, String.valueOf(image_rui));
+                    uploadData(title, description, String.valueOf(image_rui), temp);
                 }
             }
         });
@@ -164,7 +201,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
     }
 
-    private void uploadData(String title, String description, String uri) {
+    private void uploadData(String title, String description, String uri, String t) {
         pd.setMessage("Publishing Post...");
         pd.show();
 
@@ -193,6 +230,7 @@ public class AddReviewActivity extends AppCompatActivity {
                         hashMap.put("pId", timestamp);
                         hashMap.put("pTitle", title);
                         hashMap.put("pDescr", description);
+                        hashMap.put("pRating", temp);
                         hashMap.put("pImage", downloadUri);
                         hashMap.put("pTime", timestamp);
                         hashMap.put("pLikes", "0");
@@ -246,6 +284,7 @@ public class AddReviewActivity extends AppCompatActivity {
             hashMap.put("pId", timestamp);
             hashMap.put("pTitle", title);
             hashMap.put("pDescr", description);
+            hashMap.put("pRating",temp); // Eta mile nai dekhe ashe nai etokkhon!
             hashMap.put("pImage", "noImage");
             hashMap.put("pTime", timestamp);
             hashMap.put("pLikes", "0");
@@ -398,7 +437,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
      }
  }
-                @Override
+    @Override
     public boolean onSupportNavigateUp(){
         onBackPressed();//goto previous activity
         return super.onSupportNavigateUp();
@@ -505,6 +544,10 @@ public class AddReviewActivity extends AppCompatActivity {
         }
         else if(id == R.id.menu_flower_library){
             Intent intent = new Intent(AddReviewActivity.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_dictionary){
+            Intent intent = new Intent(AddReviewActivity.this, FlowerDicActivity.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

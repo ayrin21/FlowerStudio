@@ -1,16 +1,27 @@
 package tech.tanztalks.android.myfirebaseapp.models;
 
 public class ModelPost {
-    String pId, pTitle, pDescr, pLikes, pComments, pImage, pTime, uid, uEmail, uDp, uName;
+    String pId, pTitle, pDescr, pRating, pLikes, pComments, pImage, pTime, uid, uEmail, uDp, uName;
 
+    //new like trying
+    private int postLike;
+
+    public int getPostLike(){
+        return postLike;
+    }
+    public void setPostLike(int postLike){
+        this.postLike=postLike;
+    }
+   //
     public ModelPost(){
     }
 
 
-    public ModelPost(String pId, String pTitle, String pDescr, String pLikes, String pComments, String pImage, String pTime, String uid, String uEmail, String uDp, String uName) {
+    public ModelPost(String pId, String pTitle, String pDescr, String pRating, String pLikes, String pComments, String pImage, String pTime, String uid, String uEmail, String uDp, String uName) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
+        this.pRating = pRating;
         this.pLikes = pLikes;
         this.pComments = pComments;
         this.pImage = pImage;
@@ -43,6 +54,13 @@ public class ModelPost {
 
     public void setpDescr(String pDescr) {
         this.pDescr = pDescr;
+    }
+    public String getpRating() {
+        return pRating;
+    }
+
+    public void setpRating(String pRating) {
+        this.pRating = pRating;
     }
 
     public String getpLikes() {
