@@ -38,6 +38,7 @@ import tech.tanztalks.android.myfirebaseapp.R;
 import tech.tanztalks.android.myfirebaseapp.models.ModelPost;
 
 
+
 public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
    Context context;
    List<ModelPost> postList;
@@ -48,6 +49,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
      private DatabaseReference postsRef; //
 
      boolean mProcessLike = false;
+    private int likedPostPosition = -1;
+
 
     public AdapterPosts(Context context, List<ModelPost> postList) {
         this.context = context;
@@ -55,6 +58,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
         likesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
+
         postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
     }
 
@@ -64,6 +68,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         View view = LayoutInflater.from(context).inflate(R.layout.row_posts, viewGroup, false);
         return new MyHolder(view);
+
     }
 
     @Override
@@ -77,7 +82,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String uName = postList.get(i).getuName();
         String uDp = postList.get(i).getuDp();
         final String pId = postList.get(i).getpId();
-        Log.e("AdapterValue", pId);
+        //Log.e("AdapterValue", pId);
         String pTitle = postList.get(i).getpTitle();
         String pDescription = postList.get(i).getpDescr();
         //rating
@@ -101,9 +106,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.prating.setText(prating);
         myHolder.pLikesTv.setText(pLikes+" Likes"); //
         myHolder.pCommentsTv.setText(pComments + " Comments");
-
+// Disable focusability of the like button
+        myHolder.likeBtn.setFocusable(false);
         //set likes for each post
         setLikes(myHolder, pId);
+
+
+
+//        //like try 2 new placement
 
         // set user dp...
         try{
@@ -130,53 +140,189 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             }
         });
 
-//        // like new try
+
 //        myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onClick(View view) {
+//                final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
+//                mProcessLike = true;
+//                // get id of the post clicked
+//                myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 //                final String postIde = postList.get(i).getpId();
 //
-//                postsRef.child(postIde).child("likes").child(myUid).setValue(true).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                Log.d("AdapterPosts", "Like button clicked. Post ID: " + postIde);
+//                likesRef.addValueEventListener(new ValueEventListener() {
 //                    @Override
-//                    public void onSuccess(Void unused) {
-//                        postsRef.child(postIde).child("pLikes").setValue(""+(pLikes+1) + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void unused) {
-//                                myHolder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked,0,0,0);
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (mProcessLike){
+//                            if(dataSnapshot.child(postIde).hasChild(myUid)){
+//                                 //already likes, so remove like
+//                                postsRef.child(postIde).child("pLikes").setValue(""+(pLikes-1));
+//                                likesRef.child(postIde).child(myUid).removeValue();
+//                                mProcessLike = false;
+//
 //                            }
-//                        });
+//                        }
+//                        else{
+//                            // not liked, like it
+//                            postsRef.child(postIde).child("pLikes").setValue(""+(pLikes+1));
+//                            likesRef.child(postIde).child(myUid).setValue("Liked");
+//                            mProcessLike = false;
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
 //                    }
 //                });
 //
 //            }
 //        });
-
+//        myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
+//                mProcessLike = true;
+//                // get id of the post clicked
+//                myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                final String postIde = postList.get(i).getpId();
 //
+//                Log.d("AdapterPosts", "Like button clicked. Post ID: " + postIde);
+//                likesRef.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (mProcessLike) {
+//                            if (dataSnapshot.child(postIde).hasChild(myUid)) {
+//                                //already liked, so remove like
+//                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes - 1));
+//                                likesRef.child(postIde).child(myUid).removeValue();
+//                                mProcessLike = false;
+//                            } else {
+//                                // not liked, like it
+//                                likesRef.child(postIde).child(myUid).setValue("Liked")
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                // The like has been successfully added to the Likes node
+//                                                // You can update the pLikes value in the Posts node here
+//                                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes + 1));
+//                                                mProcessLike = false;
+//                                            }
+//                                        });
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//            }
+//        });
+//        myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
+//                mProcessLike = true;
+//                myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                final String postIde = postList.get(i).getpId();
+//
+//                Log.d("AdapterPosts", "Like button clicked. Post ID: " + postIde);
+//                likesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (mProcessLike) {
+//                            if (dataSnapshot.child(postIde).hasChild(myUid)) {
+//                                // Already liked, so remove like
+//                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes - 1))
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                likesRef.child(postIde).child(myUid).removeValue()
+//                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                            @Override
+//                                                            public void onSuccess(Void aVoid) {
+//                                                                mProcessLike = false;
+//                                                            }
+//                                                        });
+//                                            }
+//                                        });
+//
+//                            } else {
+//                                // Not liked, like it
+//                                likesRef.child(postIde).child(myUid).setValue("Liked")
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes + 1))
+//                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                            @Override
+//                                                            public void onSuccess(Void aVoid) {
+//                                                                mProcessLike = false;
+//                                                            }
+//                                                        });
+//                                            }
+//                                        });
+//                            }
+//                        } else {
+//                            // This block handles the case when mProcessLike is false
+//                            // It means the initial check for liking/unliking failed, so you can handle it accordingly
+//                            // For example, you can display a toast or log an error message.
+//                            Log.d("AdapterPosts", "Initial check for liking/unliking failed");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//
+//            }
+//
+//        });
+
         myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
                 mProcessLike = true;
                 // get id of the post clicked
-                myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+                myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final String postIde = postList.get(i).getpId();
+
                 likesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (mProcessLike){
-                            if(dataSnapshot.child(pId).hasChild(myUid)){
-                                // already likes, so remove like
-                                postsRef.child(pId).child("pLikes").setValue(""+(pLikes-1));
-                                likesRef.child(pId).child(myUid).removeValue();
+                        if (mProcessLike) {
+                            if (dataSnapshot.child(postIde).hasChild(myUid)) {
+                                // already liked, so remove like
+                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes - 1));
+                                likesRef.child(postIde).child(myUid).removeValue();
                                 mProcessLike = false;
-                            }
-                        }
-                        else{
-                            // not liked, like it
-                            postsRef.child(postIde).child("pLikes").setValue(""+(pLikes+1));
-                            likesRef.child(postIde).child(myUid).setValue("Liked");
-                            mProcessLike = false;
 
+                                // Update the like count in the postList
+                                int updatedLikesCount = pLikes - 1;
+                                postList.get(i).setpLikes(String.valueOf(updatedLikesCount));
+
+                                // Notify the adapter about the change in the specific item
+                                notifyItemChanged(i);
+                            } else {
+                                // not liked, like it
+                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes + 1));
+                                likesRef.child(postIde).child(myUid).setValue("Liked");
+                                mProcessLike = false;
+
+                                // Update the like count in the postList
+                                int updatedLikesCount = pLikes + 1;
+                                postList.get(i).setpLikes(String.valueOf(updatedLikesCount));
+
+                                // Notify the adapter about the change in the specific item
+                                notifyItemChanged(i);
+                            }
                         }
                     }
 
@@ -185,9 +331,66 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
                     }
                 });
-
             }
         });
+//        myHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final int pLikes = Integer.parseInt(postList.get(i).getpLikes());
+//                mProcessLike = true;
+//                // get id of the post clicked
+//                myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                final String postIde = postList.get(i).getpId();
+//
+//                Log.d("AdapterPosts", "Like button clicked. Post ID: " + postIde);
+//                likesRef.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (mProcessLike) {
+//                            if (dataSnapshot.child(postIde).hasChild(myUid)) {
+//                                // already liked, so remove like
+//                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes - 1));
+//                                likesRef.child(postIde).child(myUid).removeValue();
+//                                mProcessLike = false;
+//
+//                                // Add the following code to keep the liked post in view
+//                                if (likedPostPosition == -1) {
+//                                    likedPostPosition = i; // Set the liked post position
+//                                }
+//                            } else {
+//                                // not liked, like it
+//                                postsRef.child(postIde).child("pLikes").setValue(String.valueOf(pLikes + 1));
+//                                likesRef.child(postIde).child(myUid).setValue("Liked");
+//                                mProcessLike = false;
+//
+//                                // Add the following code to keep the liked post in view
+//                                if (likedPostPosition == -1) {
+//                                    likedPostPosition = i; // Set the liked post position
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//            }
+//        });
+//
+//        // Rest of the code...
+//
+//        // Add the following code to scroll to the liked post
+//        if (likedPostPosition == i) {
+//            recyclerView.scrollToPosition(i);
+//            likedPostPosition = -1; // Reset the position
+//        }
+
+
+
+
+
         myHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,12 +408,16 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     }
 
+
+
+
+
     private void setLikes(final MyHolder holder, final String postKey) {
         likesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.child(postKey).hasChild(myUid)){
+                if (dataSnapshot.child(postKey).hasChild(postKey)){
                     //user has liked the post
 
                     /* ... */
@@ -248,7 +455,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, prating, pLikesTv, pCommentsTv;
         ImageButton moreBtn;
         Button likeBtn, commentBtn, shareBtn;
-
+        DatabaseReference likereference;
 
 
         public MyHolder(@NonNull View itemView){
@@ -268,6 +475,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             shareBtn=itemView.findViewById(R.id.shareBtn);
             pTimeTv=itemView.findViewById(R.id.pTimeTv);
         }
+
+
 
      }
 }

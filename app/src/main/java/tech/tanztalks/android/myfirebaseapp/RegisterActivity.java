@@ -43,6 +43,10 @@ import org.intellij.lang.annotations.Pattern;
 
 import java.util.Calendar;
 import java.util.regex.Matcher;
+import java.util.regex.Matcher;
+
+
+
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -205,7 +209,16 @@ public class RegisterActivity extends AppCompatActivity {
                 String textPwd = editTextRegisterPwd.getText().toString();
                 String textConfirmPwd = editTextConfirmPwd.getText().toString();
                 String textGender;
+                // Regex patterns for email and phone number
+                String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+                String phoneRegex = "^(?:\\+88|01)?\\d{11}$";
 
+                // Create Pattern and Matcher objects
+                java.util.regex.Pattern emailPattern = java.util.regex.Pattern.compile(emailRegex);
+                java.util.regex.Matcher emailMatcher = emailPattern.matcher(textEmail);
+
+                java.util.regex.Pattern phonePattern = java.util.regex.Pattern.compile(phoneRegex);
+                java.util.regex.Matcher phoneMatcher = phonePattern.matcher(textMobile);
 
 
 //                String mobileRegex= "/^(?:\\|88)?(01[3-9]\\d{11})$/";
@@ -221,8 +234,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please enter your email", Toast.LENGTH_LONG).show();
                     editTextRegisterEmail.setError("Email is required");
                     editTextRegisterEmail.requestFocus();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
-                    Toast.makeText(RegisterActivity.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
+                } else  if (!emailMatcher.matches()) {
+                    Toast.makeText(RegisterActivity.this, "Please enter a valid email", Toast.LENGTH_LONG).show();
                     editTextRegisterEmail.setError("Valid email is required");
                     editTextRegisterEmail.requestFocus();
                 } else if (TextUtils.isEmpty(textDoB)) {
@@ -240,6 +253,10 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (textMobile.length() != 11) {
                     Toast.makeText(RegisterActivity.this, "Please re-enter your mobile no", Toast.LENGTH_LONG).show();
                     editTextRegisterMobile.setError("Mobile no should be 11 digits.");
+                    editTextRegisterMobile.requestFocus();}
+                else if (!phoneMatcher.matches()) {
+                    Toast.makeText(RegisterActivity.this, "Please enter a valid phone number", Toast.LENGTH_LONG).show();
+                    editTextRegisterMobile.setError("Valid phone number is required");
                     editTextRegisterMobile.requestFocus();}
 //                 else if(!mobileMatcher.find()){
 //                    Toast.makeText(RegisterActivity.this,"Please re-enter your mobile no.",Toast.LENGTH_LONG).show();
@@ -294,6 +311,7 @@ public class RegisterActivity extends AppCompatActivity {
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                  if(dataSnapshot.getChildrenCount()>0){
                      Toast.makeText(RegisterActivity.this, "Choose different name!", Toast.LENGTH_LONG).show();
+                     progressBar.setVisibility(View.GONE);
                  } else {
 
                      auth.createUserWithEmailAndPassword(textEmail, textPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -335,7 +353,7 @@ public class RegisterActivity extends AppCompatActivity {
                                  try {
                                      throw task.getException();
                                  } catch(FirebaseAuthUserCollisionException e){
-                                     editTextRegisterFulName.setError("User is already registered with this name");
+                                     editTextRegisterFulName.setError("User is already registered with this email!");
                                      editTextRegisterFulName.requestFocus();
                                  } catch(Exception e){
 

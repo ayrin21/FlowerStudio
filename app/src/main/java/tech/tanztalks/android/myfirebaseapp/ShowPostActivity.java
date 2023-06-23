@@ -85,6 +85,10 @@ public class ShowPostActivity extends AppCompatActivity {
             Intent intent = new Intent(ShowPostActivity.this, FlowerDicActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.menu_contact_us) {
+            Intent intent = new Intent(ShowPostActivity.this, ContactUs.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(ShowPostActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

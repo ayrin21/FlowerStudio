@@ -129,6 +129,10 @@ public class UserListActivity extends AppCompatActivity {
             Intent intent = new Intent(UserListActivity.this, FlowerDicActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.menu_contact_us) {
+            Intent intent = new Intent(UserListActivity.this, ContactUs.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(UserListActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

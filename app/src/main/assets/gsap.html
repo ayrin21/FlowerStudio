@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+<!--    <style>-->
+<!--    /* CSS styles for the animation element */-->
+<!--    body {-->
+<!--        margin: 0; /* Remove body margin */-->
+<!--        overflow: hidden; /* Hide scrollbars */-->
+<!--    }-->
+
+<!--    #animationElement {-->
+<!--        position: absolute;-->
+<!--        left: 50%; /* Position the element horizontally in the middle of the screen */-->
+<!--        top: 0; /* Position the element at the top of the screen */-->
+<!--        transform: translate(-50%, 0); /* Adjust the horizontal position */-->
+<!--        width: 200px;-->
+<!--        height: 200px;-->
+<!--        background-image: url('file:///android_asset/animation_image.png');-->
+<!--        background-size: cover;-->
+<!--    }-->
+<!--    .message-input {-->
+<!--        width: 100%;-->
+<!--        padding: 10px;-->
+<!--        margin-top: 20px;-->
+<!--    }-->
+
+<!--    .submit-button {-->
+<!--        width: 100%;-->
+<!--        padding: 10px;-->
+<!--        margin-top: 10px;-->
+<!--        background-color: #4CAF50;-->
+<!--        color: white;-->
+<!--        border: none;-->
+<!--        cursor: pointer;-->
+<!--    }-->
+<!--</style>-->
+    <style>
+        /* CSS styles for the container */
+        .container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CSS styles for the animation element */
+        #animationElement {
+            width: 200px;
+            height: 200px;
+            background-image: url('file:///android_asset/animation_image.png');
+            background-size: cover;
+            margin-bottom: 10px;
+        }
+
+        /* CSS styles for the form */
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+
+        }
+
+<!--        .message-input {-->
+<!--            width: 300px;-->
+<!--            height: 100px; /* Increase the height to make the textarea bigger */-->
+<!--            font-size: 16px;-->
+<!--            padding: 5px;-->
+<!--            resize: vertical; /* Allow vertical resizing */-->
+<!--            margin-bottom: 10px;-->
+<!--            margin-top : 200px-->
+
+<!--        }-->
+
+<!--        .submit-button {-->
+<!--            width: 100px;-->
+<!--            height: 40px;-->
+<!--            font-size: 16px;-->
+<!--            background-color: #007bff;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+        .message-input {
+            width: 300px;
+            height: 100px; /* Increase the height to make the textarea bigger */
+            font-size: 16px;
+            padding: 5px;
+            resize: vertical; /* Allow vertical resizing */
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top : 100px
+        }
+
+        .submit-button {
+            width: 100px;
+            height: 40px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+
+
+</head>
+<body>
+<body>
+<div id="animationElement"></div>
+
+
+
+
+<script>
+        // GSAP animation code
+        window.onload = function() {
+            var flower = document.getElementById("animationElement");
+
+            // Set initial position on the left side of the screen
+            gsap.set(flower, { x: -flower.offsetWidth, y: 100 });
+
+            // Calculate the destination X coordinate
+            var destinationX = window.innerWidth;
+
+            // Animate the flower horizontally to the right side of the screen
+            gsap.to(flower, {
+                x: destinationX,
+                duration: 4,
+                ease: "power1.out",
+                onComplete: function() {
+                    // Reset the position to the left side of the screen
+                    gsap.set(flower, { x: -flower.offsetWidth, y: 100 });
+
+                    // Repeat the animation
+                    animateFlower();
+                }
+            });
+        }
+
+        function animateFlower() {
+            var flower = document.getElementById("animationElement");
+
+            // Calculate the destination X coordinate
+            var destinationX = window.innerWidth;
+
+            // Animate the flower horizontally to the right side of the screen
+            gsap.to(flower, {
+                x: destinationX,
+                duration: 4,
+                ease: "power1.out",
+                onComplete: function() {
+                    // Reset the position to the left side of the screen
+                    gsap.set(flower, { x: -flower.offsetWidth, y: 100 });
+
+                    // Repeat the animation
+                    animateFlower();
+                }
+            });
+        }
+    </script>
+</body>
+<form>
+    <input type="text" class="message-input" placeholder="Enter your message" required>
+    <button type="submit" class="submit-button">Submit</button>
+</form>
+
+<script>
+        // JavaScript code for handling the form submission
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the user's input value
+            var userMessage = document.querySelector('.message-input').value;
+
+            // Perform any desired actions with the message
+            // You can send it to the server, store it locally, or perform other operations
+
+            // Reset the input field
+            document.querySelector('.message-input').value = '';
+        });
+    </script>
+</body>
+</html>

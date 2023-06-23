@@ -235,8 +235,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             Intent intent = new Intent(LocationActivity.this, FlowerLibraryActivity.class);
             startActivity(intent);
         }
-        else if(id == R.id.menu_flower_library){
+        else if(id == R.id.menu_flower_dictionary){
             Intent intent = new Intent(LocationActivity.this, FlowerDicActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_contact_us) {
+            Intent intent = new Intent(LocationActivity.this, ContactUs.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

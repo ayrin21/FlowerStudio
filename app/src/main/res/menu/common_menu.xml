@@ -35,6 +35,8 @@
 
     <item android:title="Flower Dictionary"
         android:id="@+id/menu_flower_dictionary"/>
+    <item android:title="Contact Us"
+        android:id="@+id/menu_contact_us"/>
 
     <item android:title="Sing Out"
         android:id="@+id/menu_sign_out"/>

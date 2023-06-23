@@ -131,7 +131,9 @@
                 android:drawableLeft="@drawable/ic_like_black"
                 android:background="@color/white"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_like_black"></Button>
+                android:drawableStart="@drawable/ic_like_black"
+                android:focusable="false"
+                android:focusableInTouchMode="false"></Button>
 
             <Button
                 android:id="@+id/commentBtn"

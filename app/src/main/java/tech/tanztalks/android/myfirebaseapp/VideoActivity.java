@@ -100,6 +100,9 @@ public class VideoActivity extends AppCompatActivity {
         else if(id == R.id.menu_flower_library){
             Intent intent = new Intent(VideoActivity.this, FlowerDicActivity.class);
             startActivity(intent);
+        }  else if (id == R.id.menu_contact_us) {
+            Intent intent = new Intent(VideoActivity.this, ContactUs.class);
+            startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();

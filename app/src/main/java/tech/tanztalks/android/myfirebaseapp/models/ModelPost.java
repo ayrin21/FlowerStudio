@@ -3,16 +3,7 @@ package tech.tanztalks.android.myfirebaseapp.models;
 public class ModelPost {
     String pId, pTitle, pDescr, pRating, pLikes, pComments, pImage, pTime, uid, uEmail, uDp, uName;
 
-    //new like trying
-    private int postLike;
 
-    public int getPostLike(){
-        return postLike;
-    }
-    public void setPostLike(int postLike){
-        this.postLike=postLike;
-    }
-   //
     public ModelPost(){
     }
 
