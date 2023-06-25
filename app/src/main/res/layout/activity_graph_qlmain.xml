@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".GraphQLMain">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/flower_placeholder" />
+
+    <Button
+        android:id="@+id/captureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="16dp"
+        android:text="Capture" />
+
+    <Button
+        android:id="@+id/pickButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/captureButton"
+        android:layout_marginTop="8dp"
+        android:text="Pick from Gallery" />
+
+    <Button
+        android:id="@+id/identifyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickButton"
+        android:layout_marginTop="16dp"
+        android:text="Identify Plant" />
+
+    <TextView
+        android:id="@+id/plantNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/identifyButton"
+        android:layout_marginTop="16dp"
+        android:text="Plant Name"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/plantDescriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plantNameTextView"
+        android:layout_marginTop="8dp"
+        android:text="Plant Description"
+        android:textSize="14sp" />
+
+</RelativeLayout>

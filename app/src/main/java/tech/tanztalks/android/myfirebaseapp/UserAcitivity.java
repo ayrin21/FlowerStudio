@@ -216,6 +216,10 @@ public class UserAcitivity extends AppCompatActivity {
             Intent intent = new Intent(UserAcitivity.this, ContactUs.class);
             startActivity(intent);
         }
+        else if(id == R.id.menu_know_plant){
+            Intent intent = new Intent(UserAcitivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(UserAcitivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
