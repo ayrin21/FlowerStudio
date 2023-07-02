@@ -205,9 +205,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             startActivity((getIntent()));
             finish();
 
-//        } else if(id == R.id.menu_change_password){
-//            Intent intent = new Intent(UserAcitivity.this, ChangePasswordActivity.class);
-//            startActivity(intent);
+        } else if(id == R.id.menu_flower_classification){
+            Intent intent = new Intent(LocationActivity.this, FlowerClassification.class);
+            startActivity(intent);
 
         }
         else if(id == R.id.menu_watch_video){
@@ -241,6 +241,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
         else if (id == R.id.menu_contact_us) {
             Intent intent = new Intent(LocationActivity.this, ContactUs.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(LocationActivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(LocationActivity.this, GeneratePdfActivity.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

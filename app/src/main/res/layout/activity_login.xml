@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,13 +14,16 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/textView_login_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView_login_head"
             android:layout_margin="30dp"
             android:text="Please enter your credentials to login"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#9C27B0"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:id="@+id/textView_login_email"
@@ -27,84 +31,82 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textView_login_head"
             android:layout_marginTop="50dp"
-
             android:text="Email*"
             android:textColor="#555555"
             android:textSize="16sp"
-            />
+            android:fontFamily="sans-serif" />
 
         <EditText
             android:id="@+id/editText_login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textView_login_email"
-
             android:layout_marginTop="18dp"
             android:background="@drawable/border"
             android:hint="Enter Email"
-            android:padding="6dp"
+            android:padding="12dp"
             android:textSize="16sp"
-            android:textColor="@color/black">
-
-        </EditText>
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif" />
 
         <TextView
+            android:id="@+id/textView_login_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView_login_pwd"
-
             android:layout_below="@id/editText_login_email"
             android:text="Password*"
             android:textColor="#555555"
-            android:textSize="16sp"/>
-        <!--android:layout_margin="10dp"-->
-   <!--    <ImageView
-           android:layout_width="30dp"
-           android:layout_height="32dp"
-           android:id="@+id/imageView_show_hide_pwd"
-           android:layout_below="@id/textView_login_pwd">
+            android:textSize="16sp"
+            android:fontFamily="sans-serif" />
 
-       </ImageView> -->
         <EditText
+            android:id="@+id/editText_login_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText_login_pwd"
             android:layout_below="@id/textView_login_pwd"
-
             android:hint="Enter Password"
-            android:padding="6dp"
+            android:padding="12dp"
             android:textSize="16sp"
             android:background="@drawable/border"
-            android:textColor="@color/black">
-            <!-- android:layout_marginStart="30dp"-->
-
-        </EditText>
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif" />
 
         <CheckBox
             android:id="@+id/cbRememberMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/editText_login_pwd"
             android:text="Remember me"
-            android:layout_below="@id/editText_login_pwd"/>
+            android:fontFamily="sans-serif" />
 
         <Button
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:id="@+id/login_button"
             android:layout_below="@id/cbRememberMe"
             android:layout_marginTop="50dp"
             android:layout_marginRight="70dp"
-            android:layout_marginLeft="70dp"/>
+            android:layout_marginLeft="70dp"
+            android:text="Login"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium" />
+
         <Button
+            android:id="@+id/button_forget_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forgot Password"
-            android:id="@+id/button_forget_password"
             android:layout_below="@id/login_button"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="70dp"
-            android:layout_marginLeft="70dp"/>
+            android:layout_marginLeft="70dp"
+            android:text="Forgot Password"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
         <ProgressBar
             android:id="@+id/progressBar_login_user"
             style="?android:attr/progressBarStyleLarge"
@@ -115,12 +117,6 @@
             android:elevation="10dp"
             android:visibility="gone" />
 
-
-
-
-
     </RelativeLayout>
-
-
 
 </ScrollView>

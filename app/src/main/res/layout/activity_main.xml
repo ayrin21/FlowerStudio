@@ -4,34 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:padding="15dp"
+        android:background="@android:color/white">
 
-        android:padding="15dp">
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView_logo"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:adjustViewBounds="true"-->
-<!--            android:maxWidth="180dp"-->
-<!--            app:srcCompat="@drawable/logo" />-->
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/imageView_logo"
             android:layout_width="300dp"
             android:layout_height="250dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             app:lottie_rawRes="@raw/love_letter"
             app:lottie_autoPlay="true"
-            android:id="@+id/imageView_logo"
-            app:lottie_loop="true"/>
+            app:lottie_loop="true" />
 
         <TextView
             android:id="@+id/textView_app_name"
@@ -40,7 +30,10 @@
             android:layout_below="@id/imageView_logo"
             android:text="Flower Studio"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#9C27B0"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:id="@+id/textView_main_head"
@@ -50,7 +43,10 @@
             android:layout_marginTop="10dp"
             android:text="Welcome to Flower Studio!"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+            android:textColor="#757575"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif" />
 
         <Button
             android:id="@+id/button_login"
@@ -59,7 +55,12 @@
             android:layout_below="@id/textView_main_head"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:text="Login" />
+            android:text="Login"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:id="@+id/textView_register"
@@ -67,8 +68,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/button_login"
             android:layout_marginTop="30dp"
-            android:text="Do not have an account?"
-            android:textAlignment="center" />
+            android:text="Don't have an account?"
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif" />
 
         <Button
             android:id="@+id/button_register"
@@ -77,8 +81,12 @@
             android:layout_below="@id/textView_register"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Register" />
-
+            android:text="Register"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:fontFamily="sans-serif-medium" />
 
     </RelativeLayout>
 

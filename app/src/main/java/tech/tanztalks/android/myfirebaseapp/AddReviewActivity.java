@@ -554,6 +554,14 @@ public class AddReviewActivity extends AppCompatActivity {
             Intent intent = new Intent(AddReviewActivity.this, ContactUs.class);
             startActivity(intent);
         }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(AddReviewActivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(AddReviewActivity.this, GeneratePdfActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(AddReviewActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

@@ -171,6 +171,15 @@ public class FlowerDicActivity extends AppCompatActivity {
             Intent intent = new Intent(FlowerDicActivity.this, ContactUs.class);
             startActivity(intent);
         }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(FlowerDicActivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(FlowerDicActivity.this, GeneratePdfActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(FlowerDicActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

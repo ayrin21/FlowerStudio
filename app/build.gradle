@@ -85,6 +85,7 @@ dependencies {
 
     // Apache HttpClient (for Android projects)
     implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    implementation 'com.itextpdf:itext7-core:7.1.15'
 
 
 

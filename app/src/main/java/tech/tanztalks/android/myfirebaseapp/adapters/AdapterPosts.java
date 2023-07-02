@@ -113,7 +113,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
 
 
-//        //like try 2 new placement
+
 
         // set user dp...
         try{

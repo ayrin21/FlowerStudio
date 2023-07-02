@@ -38,10 +38,10 @@ public class FlowerAdapter extends ArrayAdapter<FlowerResponseModel> {
       LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView=inflater.inflate(R.layout.display_row,parent, Boolean.parseBoolean(null));
       TextView nameTV = convertView.findViewById(R.id.flower_name);
-      TextView priceTv = convertView.findViewById(R.id.flower_price);
+      //TextView priceTv = convertView.findViewById(R.id.flower_price);
 
       nameTV.setText(flowerResponseModels.get(position).getName());
-      priceTv.setText(String.valueOf(flowerResponseModels.get(position).getPrice()));
+      //priceTv.setText(String.valueOf(flowerResponseModels.get(position).getPrice()));
       return convertView;
     }
 }

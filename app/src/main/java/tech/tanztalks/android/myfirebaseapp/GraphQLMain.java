@@ -1,5 +1,7 @@
 package tech.tanztalks.android.myfirebaseapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -12,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,12 +46,18 @@ public class GraphQLMain extends AppCompatActivity implements PlantIdDataFetcher
     private Button identifyButton;
 
     private Uri imageUri;
+    ActionBar actionBar;
+    private FirebaseAuth authProfile;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_qlmain);
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Plant Identification");
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         imageView = findViewById(R.id.imageView);
         plantNameTextView = findViewById(R.id.plantNameTextView);
@@ -140,5 +152,85 @@ public class GraphQLMain extends AppCompatActivity implements PlantIdDataFetcher
                 displayResult(plant);
             }
         });
+    }
+    public boolean onSupportNavigateUp(){
+        onBackPressed();//goto previous activity
+        return super.onSupportNavigateUp();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //Inflate menu items
+        getMenuInflater().inflate(R.menu.common_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // When any menu item is selected
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.menu_refresh){
+            //Refresh Activity
+            startActivity((getIntent()));
+            finish();
+
+        } else if(id == R.id.menu_flower_classification){
+            Intent intent = new Intent(GraphQLMain.this, FlowerClassification.class);
+            startActivity(intent);
+
+        }
+        else if(id == R.id.menu_watch_video){
+            Intent intent = new Intent(GraphQLMain.this, VideoActivity.class);
+            startActivity(intent);
+        }
+
+        else if(id == R.id.menu_location){
+            Intent intent = new Intent(GraphQLMain.this, LocationActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_reviews){
+            Intent intent = new Intent(GraphQLMain.this, AddReviewActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_panel){
+            Intent intent = new Intent(GraphQLMain.this, ShowPostActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_user_list){
+            Intent intent = new Intent(GraphQLMain.this, UserListActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_library){
+            Intent intent = new Intent(GraphQLMain.this, FlowerLibraryActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_flower_dictionary){
+            Intent intent = new Intent(GraphQLMain.this, FlowerDicActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_contact_us) {
+            Intent intent = new Intent(GraphQLMain.this, ContactUs.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(GraphQLMain.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(GraphQLMain.this, GeneratePdfActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.menu_sign_out){
+            authProfile.signOut();
+            Toast.makeText(GraphQLMain.this, "Signed Out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(GraphQLMain.this, MainActivity.class);
+
+            // Clear stack to prevent user coming back to UserActivity on pressing back button signing out
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Closer UserActivity after signing out
+        } else{
+            Toast.makeText(GraphQLMain.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

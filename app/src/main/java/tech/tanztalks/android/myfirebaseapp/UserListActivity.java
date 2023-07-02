@@ -100,6 +100,10 @@ public class UserListActivity extends AppCompatActivity {
 //            startActivity(intent);
 
         }
+        else if(id == R.id.menu_flower_classification){
+            Intent intent = new Intent(UserListActivity.this, FlowerClassification.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_watch_video){
             Intent intent = new Intent(UserListActivity.this, VideoActivity.class);
             startActivity(intent);
@@ -131,6 +135,14 @@ public class UserListActivity extends AppCompatActivity {
         }
         else if (id == R.id.menu_contact_us) {
             Intent intent = new Intent(UserListActivity.this, ContactUs.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(UserListActivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(UserListActivity.this, GeneratePdfActivity.class);
             startActivity(intent);
         }
         else if(id == R.id.menu_sign_out){

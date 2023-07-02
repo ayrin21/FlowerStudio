@@ -1,6 +1,7 @@
 package tech.tanztalks.android.myfirebaseapp;
 
 public class Plant {
+    // Retrofit2Model tried for graphql
 
     private String name;
     private String description;

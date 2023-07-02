@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,35 +10,34 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatarIv"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
             android:src="@drawable/ic_default_img"
-            />
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"/>
 
         <TextView
             android:id="@+id/nameTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/avatarIv"
             android:text="Ayrin"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_toRightOf="@id/avatarIv"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/commentTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/nameTv"
-            android:layout_toEndOf="@id/avatarIv"
             android:layout_toRightOf="@id/avatarIv"
-            android:text="This is actual comment"
+            android:text="This is the actual comment"
             android:textColor="@color/black"/>
 
         <TextView
@@ -45,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/commentTv"
-            android:layout_toEndOf="@id/avatarIv"
             android:layout_toRightOf="@id/avatarIv"
             android:text="1/20/23"/>
 

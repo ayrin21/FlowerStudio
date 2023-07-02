@@ -220,6 +220,10 @@ public class UserAcitivity extends AppCompatActivity {
             Intent intent = new Intent(UserAcitivity.this, GraphQLMain.class);
             startActivity(intent);
         }
+        else if(id == R.id.menu_report){
+            Intent intent = new Intent(UserAcitivity.this, GeneratePdfActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(UserAcitivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

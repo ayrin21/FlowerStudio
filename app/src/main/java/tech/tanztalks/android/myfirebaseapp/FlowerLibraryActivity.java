@@ -154,6 +154,15 @@ public class FlowerLibraryActivity extends AppCompatActivity {
             Intent intent = new Intent(FlowerLibraryActivity.this, ContactUs.class);
             startActivity(intent);
         }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(FlowerLibraryActivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(FlowerLibraryActivity.this, GeneratePdfActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(FlowerLibraryActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

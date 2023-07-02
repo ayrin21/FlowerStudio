@@ -17,9 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView_upload_pic_head"
-            android:text="Upload your photo"
+            android:text="Upload Your Photo"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline">
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#9C27B0"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-medium">
             
         </TextView>
         <Button
@@ -31,7 +34,8 @@
             android:text="Choose Picture"
             android:layout_marginRight="70dp"
             android:layout_marginLeft="70dp"
-            android:backgroundTint="@color/teal_200">
+            android:backgroundTint="@color/teal_200"
+            android:background="@drawable/button_background">
 
         </Button>
         <ImageView
@@ -51,7 +55,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
-            android:text="Upload">
+            android:text="UPLOAD"
+            android:background="@drawable/button_background">
 
         </Button>
         <ProgressBar

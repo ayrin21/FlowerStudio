@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+// Retrofit2Model tried for graphql
 public class PlantIdDataFetcher {
     private static final String API_URL = "https://api.plant.id/v2/identify";
     private static final String API_KEY = "ZMmNBikU6Q8AW35k6yfW7Xuz5wxWKMQLJugrIx2JYUiuCdVq5x";

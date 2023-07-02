@@ -104,6 +104,14 @@ public class VideoActivity extends AppCompatActivity {
             Intent intent = new Intent(VideoActivity.this, ContactUs.class);
             startActivity(intent);
         }
+        else if (id == R.id.menu_know_plant) {
+            Intent intent = new Intent(VideoActivity.this, GraphQLMain.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_report) {
+            Intent intent = new Intent(VideoActivity.this, GeneratePdfActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.menu_sign_out){
             authProfile.signOut();
             Toast.makeText(VideoActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();

@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+    //retrofit1
     //Initilize variable
     private ArrayList<MainData> dataArrayList;
     private Activity activity;
